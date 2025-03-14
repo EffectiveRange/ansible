@@ -1,6 +1,7 @@
 ---
 - name: Setup Filebeat service
   hosts: all
+  become: true
   vars:
     filebeat_config_path: /etc/filebeat/filebeat.yml
     filebeat_input_path: /var/log/effective-range/*/*.log

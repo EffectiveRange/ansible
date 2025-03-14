@@ -1,6 +1,7 @@
 ---
 - name: APT upgrade packages
   hosts: all
+  become: true
 
   tasks:
     - name: Update APT package cache and upgrade installed packages

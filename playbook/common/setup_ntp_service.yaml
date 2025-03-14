@@ -1,6 +1,7 @@
 ---
 - name: Setup NTP service
   hosts: all
+  become: true
   vars:
     ntp_config_path: /etc/ntp.conf
     ntp_server_host: localhost
