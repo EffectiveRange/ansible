@@ -1,0 +1,25 @@
+---
+- name: Setup NTP service
+  hosts: all
+  vars:
+    ntp_config_path: /etc/ntp.conf
+    ntp_server_host: localhost
+
+  tasks:
+    - name: Install NTP package
+      ansible.builtin.apt:
+        name: ntp
+        state: present
+
+    - name: Update NTP configuration
+      ansible.builtin.copy:
+        dest: "{{ ntp_config_path }}"
+        backup: yes
+        content: |
+          server {{ ntp_server_host }} iburst
+
+    - name: Restart NTP service
+      ansible.builtin.systemd:
+        name: ntp
+        state: restarted
+        enabled: yes
