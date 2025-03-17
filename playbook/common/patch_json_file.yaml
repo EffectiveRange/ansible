@@ -1,0 +1,19 @@
+---
+- name: Patch JSON file
+  hosts: all
+  become: true
+  vars:
+    jq_expression: .
+    input_file_path: /usr/share/iso-codes/json/iso_4217.json
+    output_file_path: /tmp/iso_4217.json
+
+  tasks:
+    - name: Install jq package
+      ansible.builtin.apt:
+        name: jq
+        state: present
+
+    - name: Update JSON file with jq
+      ansible.builtin.shell:
+        cmd: jq '{{ jq_expression }}' {{ input_file_path }} > {{ output_file_path }}
+        executable: /bin/bash
