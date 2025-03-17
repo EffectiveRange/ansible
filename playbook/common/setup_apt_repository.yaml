@@ -2,9 +2,10 @@
   hosts: all
   become: true
   vars:
+    distribution: bullseye
     repo_source_path: /etc/apt/sources.list.d/effective-range.list
-    repo_source_entry: deb http://aptrepo.effective-range.com stable main
-    repo_key_url: http://aptrepo.effective-range.com/dists/stable/public.key
+    repo_source_entry: deb http://aptrepo.effective-range.com {{ distribution }} main
+    repo_key_url: http://aptrepo.effective-range.com/dists/{{ distribution }}/public.key
 
   tasks:
     - name: Create repository source
