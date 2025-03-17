@@ -1,0 +1,26 @@
+- name: Setup APT repository
+  hosts: all
+  become: true
+  vars:
+    distribution: bullseye
+    repo_source_path: /etc/apt/sources.list.d/effective-range.list
+    repo_source_entry: deb http://aptrepo.effective-range.com {{ distribution }} main
+    repo_key_url: http://aptrepo.effective-range.com/dists/{{ distribution }}/public.key
+
+  tasks:
+    - name: Create repository source
+      lineinfile:
+        path: "{{ repo_source_path }}"
+        state: present
+        create: yes
+        line: "{{ repo_source_entry }}"
+
+    - name: Add repository public key
+      apt_key:
+        url: "{{ repo_key_url }}"
+        state: present
+
+    - name: Update repository cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
