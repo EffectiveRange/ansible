@@ -1,5 +1,5 @@
 ---
-- name: APT upgrade packages
+- name: Upgrade APT packages
   hosts: all
   become: true
 
