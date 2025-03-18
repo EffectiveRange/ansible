@@ -1,5 +1,5 @@
 ---
-- name: Ping hosts
+- name: Verify Ansible access
   hosts: all
   become: true
 
