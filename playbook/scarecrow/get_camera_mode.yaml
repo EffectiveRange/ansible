@@ -1,0 +1,15 @@
+---
+- name: Get camera mode
+  hosts: all
+  become: true
+  vars:
+    services:
+      - er-scarecrow-stream
+      - er-scarecrow-detect
+
+  tasks:
+    - name: Execute command
+      ansible.builtin.shell:
+        cmd: "systemctl is-active {{ item }}"
+      loop: "{{ services }}"
+      register: command_results
