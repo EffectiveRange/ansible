@@ -10,6 +10,8 @@
     - name: Get manual service status
       ansible.builtin.shell:
         cmd: "systemctl is-active {{ manual_service }}"
+      ignore_errors: true
     - name: Get auto service status
       ansible.builtin.shell:
         cmd: "systemctl is-active {{ auto_service }}"
+      ignore_errors: true
