@@ -4,9 +4,15 @@
   become: true
   vars:
     source_schedule: /opt/effective-range/scarecrow/schedule.json
-    target_schedule: /usr/local/config/schedule.json
+    target_schedule: /etc/er-schedule/schedule.json
 
   tasks:
+    - name: Install er-schedule package
+      ansible.builtin.apt:
+        name: python3-er-schedule
+        state: present
+        update_cache: yes
+
     - name: Copy schedule file
       ansible.builtin.copy:
         src: "{{ source_schedule }}"
