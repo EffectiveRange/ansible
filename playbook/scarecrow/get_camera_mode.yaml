@@ -3,13 +3,15 @@
   hosts: all
   become: true
   vars:
-    services:
-      - er-scarecrow-stream
-      - er-scarecrow-detect
+    manual_service: er-scarecrow-stream
+    auto_service: er-scarecrow-detect
 
   tasks:
-    - name: Execute command
+    - name: Get manual service status
       ansible.builtin.shell:
-        cmd: "systemctl is-active {{ item }}"
-      loop: "{{ services }}"
-      register: command_results
+        cmd: "systemctl is-active {{ manual_service }}"
+      ignore_errors: true
+    - name: Get auto service status
+      ansible.builtin.shell:
+        cmd: "systemctl is-active {{ auto_service }}"
+      ignore_errors: true
