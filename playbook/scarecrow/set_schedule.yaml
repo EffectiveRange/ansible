@@ -1,0 +1,19 @@
+---
+- name: Set schedule
+  hosts: all
+  become: true
+  vars:
+    source_schedule: /opt/effective-range/scarecrow/schedule.json
+    target_schedule: /usr/local/config/schedule.json
+
+  tasks:
+    - name: Copy schedule file
+      ansible.builtin.copy:
+        src: "{{ source_schedule }}"
+        dest: "{{ target_schedule }}"
+
+    - name: Restart er-schedule service
+      ansible.builtin.systemd:
+        name: er-schedule
+        state: restarted
+        enabled: yes
