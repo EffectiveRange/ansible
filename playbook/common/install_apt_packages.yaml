@@ -4,13 +4,14 @@
   become: true
   vars:
     packages:
-     - "curl"
+      - "curl"
 
   tasks:
     - name: Install packages
       ansible.builtin.apt:
         name: "{{ item }}"
         update_cache: yes
+        upgrade: yes
         install_recommends: no
         state: present
       loop: "{{ packages }}"
