@@ -9,6 +9,8 @@
   tasks:
     - name: Install packages
       ansible.builtin.apt:
-        name: "{{ packages }}"
+        name: "{{ item }}"
         update_cache: yes
+        install_recommends: no
         state: present
+      loop: "{{ packages }}"
