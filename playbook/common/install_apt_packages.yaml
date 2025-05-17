@@ -7,6 +7,12 @@
       - "curl"
 
   tasks:
+    - name: Stop er-schedule service
+      ansible.builtin.systemd:
+        name: er-schedule
+        state: stopped
+        enabled: yes
+
     - name: Install packages
       ansible.builtin.apt:
         name: "{{ item }}"
@@ -14,3 +20,10 @@
         install_recommends: no
         state: latest
       loop: "{{ packages }}"
+      ignore_errors: true
+
+    - name: Start er-schedule service
+      ansible.builtin.systemd:
+        name: er-schedule
+        state: started
+        enabled: yes
